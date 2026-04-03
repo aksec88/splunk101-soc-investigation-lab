@@ -1,16 +1,32 @@
-# KCD SOC Incident Report: FRONTDESK-PC1 Compromise
+## Password Spray to Endpoint Compromise and C2 (Sliver)
 
-## Scenario
+### Project Description
+This project documents a SOC investigation into a successful password spraying attack that led to endpoint compromise, command-and-control (C2) communication, and the establishment of persistence on a Windows host.
 
-A local administrator at Kerning City Dental (KCD) reported unexpected mouse movement on his workstation at approximately 13:00 UTC on October 15, 2025. This project documents the full SOC investigation from initial triage through report delivery, using Splunk to analyze endpoint, network, and IDS telemetry across a simulated healthcare environment.
+### Objective
+- Identify how the attacker gained initial access  
+- Reconstruct attacker activity on the compromised endpoint  
+- Determine whether persistence mechanisms were deployed  
+- Assess whether the intrusion extended beyond the initial system  
 
-## Tools & Technologies
+### Skills Learned
+- Log analysis using Splunk (Windows Event Logs and Sysmon)  
+- Correlating authentication, process creation, and network activity  
+- Identifying attacker behavior across multiple attack stages  
+- Validating incident scope and containment  
+- Applying threat intelligence to confirm malicious infrastructure  
+- Mapping attacker actions to detection opportunities  
 
-- **SIEM:** Splunk
-- **Endpoint Telemetry:** Sysmon, Windows Security Logs, Windows Defender Logs, PowerShell Logs
-- **Network Telemetry:** Zeek, Suricata (IDS)
-- **Threat Intelligence:** VirusTotal, AbuseIPDB, ThreatFox
-- **Framework:** MITRE ATT&CK, MITRE D3FEND
+### Tools & Technologies (Purpose)
+- **Splunk (SIEM):** Log aggregation, querying, and event correlation  
+- **Sysmon:** Visibility into process execution and network connections  
+- **Windows Event Logs:** Authentication and privilege-related activity  
+- **Zeek:** Network connection and protocol analysis  
+- **Suricata:** Detection of suspicious or malicious network traffic  
+
+### Scenario
+A user (Ryan Adams) reported unauthorized mouse movement on **FRONTDESK-PC1**, suggesting potential remote access.  
+The investigation focused on identifying the source of compromise, reconstructing attacker activity, and determining whether additional systems were affected.
 
 ## Attack Chain
 
@@ -75,28 +91,26 @@ Confirmed all attacker activity confined to FRONTDESK-PC1. No credential reuse, 
 Validated C2 IP through multiple sources confirming Sliver C2 infrastructure.
 
 ![AbuseIPDB](screenshots/10_OSINT_AbuseIPDB.png)
-
-![VirusTotal Domain](screenshots/10_OSINT_VirusTotal_Domain.png)
-
 ![VirusTotal Detection Ratio](screenshots/11_OSINT_VirusTotal_DetectionRatio.png)
-
+![VirusTotal Domain](screenshots/10_OSINT_VirusTotal_Domain.png)
 ![VirusTotal Sliver Association](screenshots/11_OSINT_VirusTotal_Sliver.png)
 
 ## Key Findings
 
-| Field | Value |
-|---|---|
-| Timeframe | 12:51:44 – 13:04:59 UTC (13 minutes 15 seconds) |
-| Dwell Time | ~8 minutes (compromise to user detection) |
-| Host | FRONTDESK-PC1 (172[.]16[.]0[.]110) |
-| Compromised Account | Ryan.Adams (local administrator) |
-| Attacker Source | 172[.]16[.]0[.]184 (DESKTOP-924H12) |
-| C2 IP | 157[.]245[.]46[.]190 (ports 8888, 9999) |
-| C2 Framework | Sliver |
-| Payload | python.exe |
-| Payload SHA256 | CFFAB896E9F0B12101034D9CED76332EF5AA4036AFA08E940E825E277C21A044 |
-| Persistence | Scheduled Task "PythonUpdate" (SYSTEM, onstart) |
-| Scope | Single endpoint — no lateral movement, no data exfiltration |
+- **Timeframe:** 2025-10-15 12:51:44–13:04:59 UTC  
+- **Host:** FRONTDESK-PC1 (172.16.0.110)  
+- **Compromised Account:** KCD\Ryan.Adams — Local Administrator  
+- **Attacker Source:** 172.16.0.184 (DESKTOP-924H12)  
+- **C2:** 157.245.46.190:8888, 9999 (AS14061 — DigitalOcean, London, UK)  
+- **C2 Domain:** kajsdiqwe[.]icu  
+- **C2 Framework:** Sliver  
+- **Threat Type:** botnet_cc  
+- **Confidence Level:** 46%  
+- **Payload:** python.exe  
+- **Payload Path:** C:\Users\Ryan.Adams\Music\python.exe  
+- **Payload SHA256:** CFFAB896E9F0B12101034D9CED76332EF5AA4036AFA08E940E825E277C21A044  
+- **Persistence:** Scheduled Task “PythonUpdate” (onstart /ru SYSTEM)  
+- **Lateral Movement Target:** 172.16.0.7 (Ports 135, 49669)
 
 ## Scope & Impact
 
