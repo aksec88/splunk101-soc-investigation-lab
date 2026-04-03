@@ -1,4 +1,4 @@
-# Splunk SOC Investigation Lab — Endpoint Compromise Analysis
+# Splunk SOC Investigation Lab — Endpoint Compromise 
 
 ## Objective
 
