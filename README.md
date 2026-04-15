@@ -141,11 +141,11 @@ Full SPL query set is provided in **spl_queries.txt**.
 - [**FRONTDESK‑PC1 Compromise_Report.pdf**](https://github.com/aksec88/splunk-soc-investigation-lab/blob/main/FRONTDESK%E2%80%91PC1%20Compromise_Report.pdf) — Full SOC investigation report  
 - **spl_queries.txt** — Complete SPL query set  
 
-*All analysis performed on simulated lab data as part of the MyDFIR Splunk 101 Capstone.*
+*All analysis performed on simulated lab data as part of the MyDFIR Splunk-101 Capstone.*
 
 ---
 
-**Report:** FRONTDESK‑PC1 Compromise  
-**Author:** Abdul Kuyateh  
-**Scope:** MyDFIR Splunk 101 Capstone (Simulated Lab Data)  
-**Date:** October 2025
+**Kerning City Dental — FRONTDESK‑PC1 Compromise**  
+**splunk101 SOC Investigation Capstone**  
+**Analyst:** Abdul Kuyateh  
+
