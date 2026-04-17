@@ -1,4 +1,4 @@
-# Password Spray → C2 Compromise Investigation
+# FRONTDESK-PC1 Compromise — Password Spray to C2 Investigation
 
 End-to-end SOC investigation of a simulated compromise on **FRONTDESK-PC1 (Kerning City Dental)**.
 
